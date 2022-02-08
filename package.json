@@ -1,0 +1,30 @@
+{
+  "name": "project-creation",
+  "version": "1.0.0",
+  "description": "Lambda function to automate project creation in infra",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auroraai-bot-platform/project-creation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/auroraai-bot-platform/project-creation/issues"
+  },
+  "homepage": "https://github.com/auroraai-bot-platform/project-creation#readme",
+  "dependencies": {
+    "axios": "^0.25.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.92",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^17.0.16",
+    "typescript": "^4.5.5"
+  }
+}
