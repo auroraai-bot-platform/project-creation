@@ -1,5 +1,5 @@
-import { Handler} from 'aws-lambda';
-import axios, { Method } from 'axios';
+import { Handler } from 'aws-lambda';
+import axios from 'axios';
 
 const endpoint = process.env.PROJECT_CREATE_ENDPOINT || '/api/projects';
 
@@ -21,25 +21,27 @@ interface Result {
   body: string;
 }
 
-export const handler: Handler<LambdaRequest, Result> = async (event, context) => {
-
+export const handler: Handler<LambdaRequest, Result> = async (event) => {
   console.log('Run version: ', process.env.VERSION);
+  return await createProjects(event);
+}
 
-  if (!event.botfrontBaseUrl) {
+export async function createProjects(projectData: LambdaRequest) {
+  if (!projectData.botfrontBaseUrl) {
     return errorHandler('botfrontBaseUrl missing.', 400);
   }
 
-  if (!event.projects) {
+  if (!projectData.projects) {
     return errorHandler('projectIds array undefined', 400);
   }
 
   try {
-    const putPromises = event.projects.map((project) => {
+    const putPromises = projectData.projects.map((project) => {
       return axios.request({
-        headers: { authorization: event.authToken},
+        headers: { authorization: projectData.authToken},
         method: 'PUT',
         data: project,
-        url: `${event.botfrontBaseUrl}${endpoint}`
+        url: `${projectData.botfrontBaseUrl}${endpoint}`
       });
     });
 
@@ -56,14 +58,14 @@ export const handler: Handler<LambdaRequest, Result> = async (event, context) =>
 }
 
 
-export function successHandler(data: string = ''): Result {
+function successHandler(data = ''): Result {
   return {
     statusCode: 200,
     body: data
   };
 }
 
-export function errorHandler(error: any, statusCode: number = 503, ): Result {
+function errorHandler(error: unknown, statusCode = 503, ): Result {
   console.log({error});
   return {
     statusCode: statusCode,

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-
-import { handler, LambdaRequest } from '../src/index';
+import { describe, it } from 'mocha';
+import { createProjects, LambdaRequest } from '../src/index';
 
 const token = process.env.REST_API_TOKEN || 'TEST_TOKEN';
 
@@ -20,7 +20,7 @@ describe('test lambda handler', function() {
       ]
     };
 
-    const result = await handler(requestData, null as any, null as any);
+    const result = await createProjects(requestData);
     console.log({result});
     if (!result) {
       assert.fail('No lambda response');
@@ -43,7 +43,7 @@ describe('test lambda handler', function() {
       ]
     };
 
-    const result = await handler(requestData, null as any, null as any);
+    const result = await createProjects(requestData);
 
     if (!result) {
       assert.fail('No lambda response');
