@@ -46,7 +46,6 @@ export const handler: Handler<LambdaRequest, Result> = async (event, context) =>
     const results = await Promise.allSettled(putPromises);
 
     if (results.some((result) => result.status === 'rejected')) {
-      console.log(JSON.stringify(results));
       return errorHandler(`Some promises were rejected: ${JSON.stringify(results)}`);
     }
   } catch (error) {
@@ -65,6 +64,7 @@ export function successHandler(data: string = ''): Result {
 }
 
 export function errorHandler(error: any, statusCode: number = 503, ): Result {
+  console.log({error});
   return {
     statusCode: statusCode,
     body: JSON.stringify({ error })

@@ -44,7 +44,7 @@ describe('test lambda handler', function() {
     };
 
     const result = await handler(requestData, null as any, null as any);
-    console.log({result});
+
     if (!result) {
       assert.fail('No lambda response');
     }
