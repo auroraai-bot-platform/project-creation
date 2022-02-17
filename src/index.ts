@@ -4,7 +4,6 @@ import axios from 'axios';
 const endpoint = process.env.PROJECT_CREATE_ENDPOINT || '/api/projects';
 
 export interface LambdaRequest {
-  authToken: string;
   botfrontBaseUrl: string;
   projects: Project[];
 }
@@ -38,7 +37,6 @@ export async function createProjects(projectData: LambdaRequest) {
   try {
     const putPromises = projectData.projects.map((project) => {
       return axios.request({
-        headers: { authorization: projectData.authToken},
         method: 'PUT',
         data: project,
         url: `${projectData.botfrontBaseUrl}${endpoint}`

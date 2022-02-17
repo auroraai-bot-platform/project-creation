@@ -20,16 +20,15 @@ services:
       - .env
     environment:
       PORT: 3000
-  
+ 
   mongo:
     image: 'mongo:latest'
     container_name: project-creation-test-mongo
     restart: always
     networks:
       - project-creation-test-network
-    ports:
-      - '27017:27017'
     env_file:
       - .env
+
 networks:
   project-creation-test-network: {}
