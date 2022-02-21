@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'production',
   target: 'node',
   entry: './build/index.js', // make sure this matches the main root of your code 
   output: {

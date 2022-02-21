@@ -13,6 +13,12 @@ interface Project {
   name: string;
   nameSpace: string;
   projectId: string;
+  host: string;
+  token?: string;
+  actionEndpoint: string;
+  prodBaseUrl?: string;
+  prodActionEndpoint?: string;
+  hasProd?: boolean;
 }
 
 interface Result {

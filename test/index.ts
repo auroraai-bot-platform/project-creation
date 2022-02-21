@@ -12,16 +12,15 @@ describe('test lambda handler', function() {
       botfrontBaseUrl: 'http://localhost:3030',
       projects: [
         {
-          baseUrl: 'http://rasa-demo-1.demoservice.internal:5006',
-          name: 'demo-1',
-          nameSpace: 'bf-demo-1',
-          projectId: 'hH4Z8S7GXiHsp3PTP'
-        },
-        {
-          baseUrl: 'http://rasa-palmu-demo.demoservice.internal:5007',
-          name: 'palmu-demo',
-          nameSpace: 'bf-palmu-demo',
-          projectId: 'C6y53duQKrDhBqFRp'
+          baseUrl: 'http://example.test',
+          name: 'TESTPROJECT',
+          nameSpace: 'bf-testproject',
+          projectId: 'TESTPROJECTID',
+          host: 'http://example.test',
+          token: '1123',
+          actionEndpoint: 'http://example.test',
+          prodActionEndpoint: 'http://example.test',
+          prodBaseUrl: 'http://example.test'
         }
       ]
     };
