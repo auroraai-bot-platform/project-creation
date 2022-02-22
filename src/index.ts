@@ -22,12 +22,13 @@ interface Project {
 }
 
 interface Result {
-  statusCode: number;
+  StatusCode: number;
   body: string;
 }
 
 export const handler: Handler<LambdaRequest, Result> = async (event) => {
   console.log('Run version: ', process.env.VERSION);
+  console.log({event: JSON.stringify(event)});
   return await createProjects(event);
 }
 
@@ -52,10 +53,12 @@ export async function createProjects(projectData: LambdaRequest) {
     const results = await Promise.allSettled(putPromises);
 
     if (results.some((result) => result.status === 'rejected')) {
-      return errorHandler(`Some promises were rejected: ${JSON.stringify(results)}`);
+      console.log(`Some promises were rejected: ${JSON.stringify(results)}`);
+      throw new Error('`Some promises were rejected: ${JSON.stringify(results)}`');
     }
   } catch (error) {
-    return errorHandler(error);
+    console.log({ error });
+    throw error;
   }
 
   return successHandler();
@@ -64,7 +67,7 @@ export async function createProjects(projectData: LambdaRequest) {
 
 function successHandler(data = ''): Result {
   return {
-    statusCode: 200,
+    StatusCode: 200,
     body: data
   };
 }
@@ -72,7 +75,7 @@ function successHandler(data = ''): Result {
 function errorHandler(error: unknown, statusCode = 503, ): Result {
   console.log({error});
   return {
-    statusCode: statusCode,
+    StatusCode: statusCode,
     body: JSON.stringify({ error })
   };
 }
