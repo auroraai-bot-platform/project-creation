@@ -1,9 +1,12 @@
 import { Handler } from 'aws-lambda';
 import axios from 'axios';
+import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+
 
 const endpoint = process.env.PROJECT_CREATE_ENDPOINT || '/api/projects';
 
 export interface LambdaRequest {
+  tokenSecretArn: string;
   botfrontBaseUrl: string;
   projects: Project[];
 }
@@ -41,8 +44,13 @@ export async function createProjects(projectData: LambdaRequest) {
     return errorHandler('projectIds array undefined', 400);
   }
 
+  const token = await getSecret(projectData.tokenSecretArn);
+  const projects = projectData.projects.map((project) => {
+    return {...project, token};
+  });
+
   try {
-    const putPromises = projectData.projects.map((project) => {
+    const putPromises = projects.map((project) => {
       return axios.request({
         method: 'PUT',
         data: project,
@@ -78,4 +86,16 @@ function errorHandler(error: unknown, statusCode = 503, ): Result {
     StatusCode: statusCode,
     body: JSON.stringify({ error })
   };
+}
+
+async function getSecret(secretId: string): Promise<string> {
+  const client = new SecretsManagerClient({});
+  const command = new GetSecretValueCommand({SecretId: secretId});
+  const response = await client.send(command);
+
+  if (!response.SecretString) {
+    throw new Error('SecretString undefined');
+  }
+ 
+  return response.SecretString;
 }

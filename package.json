@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/auroraai-bot-platform/project-creation#readme",
   "dependencies": {
-    "axios": "^0.25.0",
-    "webpack-node-externals": "^3.0.0"
+    "@aws-sdk/client-secrets-manager": "^3.53.0",
+    "axios": "^0.25.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
