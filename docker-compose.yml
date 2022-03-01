@@ -5,6 +5,18 @@
 
 version: '3.0'
 services:
+
+  moto:
+    image: 'motoserver/moto:latest'
+    container_name: project-creation-test-moto
+    restart: always
+    networks:
+      - project-creation-test-network
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+
   botfront:
     image: 'botfront-private:latest'
     container_name: project-creation-test-botfront-app

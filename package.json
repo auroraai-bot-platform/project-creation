@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run clear-build-folders && npm run lint && npm run ts-build && npx webpack && npm run zip",
-    "test": "npm run start-containers && sleep 2 && npm run mocha-test || true && npm run stop-containers",
-    "mocha-test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
+    "test": "npm run start-containers && sleep 5 && npm run mocha-test || true && npm run stop-containers",
+    "mocha-test": "AWS_ENDPOINT=http://localhost:5000 env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --timeout 10000 -r ts-node/register 'test/**/*.ts'",
     "start-containers": "docker-compose up -d",
     "stop-containers": "docker-compose down",
     "lint": "eslint ./src --ext .ts",
