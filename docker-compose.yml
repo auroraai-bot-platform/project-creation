@@ -1,8 +1,3 @@
-######################################################################################################
-# This file is generated when `botfront up` is invoked.                                              #
-# Changes in .botfront/botfront.yml and .botfront/docker-compose-template.yml will be reflected here #
-######################################################################################################
-
 version: '3.0'
 services:
 
