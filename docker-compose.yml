@@ -1,0 +1,41 @@
+version: '3.0'
+services:
+
+  moto:
+    image: 'motoserver/moto:latest'
+    container_name: project-creation-test-moto
+    restart: always
+    networks:
+      - project-creation-test-network
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+
+  botfront:
+    image: 'botfront-private:latest'
+    container_name: project-creation-test-botfront-app
+    restart: always
+    networks:
+      - project-creation-test-network
+    ports:
+      - '8888:3000'
+      - '3030:3030'
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    environment:
+      PORT: 3000
+ 
+  mongo:
+    image: 'mongo:latest'
+    container_name: project-creation-test-mongo
+    restart: always
+    networks:
+      - project-creation-test-network
+    env_file:
+      - .env
+
+networks:
+  project-creation-test-network: {}
