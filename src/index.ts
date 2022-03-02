@@ -91,7 +91,6 @@ function errorHandler(error: unknown, statusCode = 503, ): Result {
 }
 
 async function getSecret(secretId: string): Promise<string> {
-  console.log({awsEndpoint});
   const client = new SecretsManagerClient({ endpoint: awsEndpoint });
   const command = new GetSecretValueCommand({ SecretId: secretId });
   const response = await client.send(command);
